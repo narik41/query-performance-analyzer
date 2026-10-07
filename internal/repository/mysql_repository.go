@@ -330,7 +330,7 @@ func (a MySQLAdapter) supportsExplainAnalyze(ctx context.Context) (bool, string)
 	fmt.Sscanf(versionStr, "%d.%d.%d", &major, &minor, &patch)
 
 	if isMariaDB {
-		if major > 10 || (major == 10 && minor >= 13) {
+		if major > 10 || (major == 10 && minor >= 11) {
 			return true, "EXPLAIN ANALYZE"
 		}
 		return false, ""
