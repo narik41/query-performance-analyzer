@@ -362,9 +362,6 @@ func (a MySQLAdapter) ExecuteQuery(ctx context.Context, query string) (int64, in
 	var rowCount int64
 	for rows.Next() {
 		rowCount++
-		if err := rows.Scan(); err != nil {
-			return 0, 0, err
-		}
 	}
 	if err := rows.Err(); err != nil {
 		return 0, 0, err
