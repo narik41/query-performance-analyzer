@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"database-query-analyzer/internal/logger"
 	"database-query-analyzer/internal/repository"
 	"fmt"
 
@@ -89,6 +90,7 @@ func (s *QueryAnalyzerService) GetIndexes(ctx context.Context, in input.GetIndex
 }
 
 func (s *QueryAnalyzerService) ExplainQuery(ctx context.Context, in input.ExplainInput) (output.ExplainOutput, error) {
+	logger.Default().InfoWithCtxf(ctx, "Running explain cmd. %v", in.SQL)
 	plan, err := s.repository.Explain(ctx, in.SQL)
 	if err != nil {
 		return output.ExplainOutput{}, err
@@ -97,6 +99,7 @@ func (s *QueryAnalyzerService) ExplainQuery(ctx context.Context, in input.Explai
 }
 
 func (s *QueryAnalyzerService) ExplainAnalyze(ctx context.Context, in input.ExplainInput) (output.ExplainOutput, error) {
+	logger.Default().InfoWithCtxf(ctx, "Running explain analyze cmd. %v", in.SQL)
 	analysis, err := s.repository.ExplainAnalyze(ctx, in.SQL)
 	if err != nil {
 		return output.ExplainOutput{}, err
@@ -105,7 +108,7 @@ func (s *QueryAnalyzerService) ExplainAnalyze(ctx context.Context, in input.Expl
 }
 
 func (s *QueryAnalyzerService) GetQueryStats(ctx context.Context, in input.QueryStatsInput) (output.QueryStatsOutput, error) {
-
+	logger.Default().InfoWithCtxf(ctx, "Get query stats. %v", in.SQL)
 	plan, err := s.repository.Explain(ctx, in.SQL)
 	if err != nil {
 		return output.QueryStatsOutput{}, fmt.Errorf("explain: %w", err)
